@@ -21,9 +21,20 @@ async def show_date(message: types.Message):
 
 @disp.message_handler(commands=['show'])
 async def start(message: types.Message):
-    keyboard = types.ReplyKeyboardMarkup()
+    keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     keyboard.add(*['time', 'date'])
     await message.reply('Choose what to show', reply_markup=keyboard)
+
+@disp.message_handler(commands=['inline_show'])
+async def inline_start(message: types.Message):
+    keyboard = types.InlineKeyboardMarkup()
+    buttons = [types.InlineKeyboardButton(text=i.split('/')[-1],
+                                          url=i) for i in ['https://github.com/TecHeReTiC3141/Dungetic',
+                                                           'https://github.com/TecHeReTiC3141/learning_pysimpleGUI',
+                                                           'https://github.com/TecHeReTiC3141/System-of-road-accidents-analytics']]
+    keyboard.add(*buttons)
+    await message.answer('My repos:', reply_markup=keyboard)
+    await message.answer('Also please visit my GitHub-account: https://github.com/TecHeReTiC3141')
 
 
 executor.start_polling(disp, skip_updates=True)
