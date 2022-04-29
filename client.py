@@ -40,3 +40,10 @@ async def inline_start(message: types.Message):
 async def echo_photo(message: types.Message):
     await message.reply_photo(message.photo[0].file_id)
 
+
+@disp.message_handler()
+async def anything(message: types.Message):
+    banned = await handle_banned(message.text.split())
+    if banned:
+        await message.reply(f'Праукраинские слова {banned} запрещены')
+        await message.delete()
