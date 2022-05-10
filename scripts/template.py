@@ -112,7 +112,7 @@ async def voice_handler(message: types.Message):
     subprocess.run(['./ffmpeg/bin/ffmpeg.exe', '-i', file_name_full, file_name_converted])
 
     text = await recognise(file_name_converted)
-    tts = gtts.gTTS(text, lang='ru')
+    tts = gtts.gTTS(text, lang='ru', )
     answer_path = f"./file/answers/{message.from_user.username}"
     Path(answer_path).mkdir(parents=True, exist_ok=True)
 
@@ -122,6 +122,8 @@ async def voice_handler(message: types.Message):
     subprocess.run(['./ffmpeg/bin/ffmpeg.exe', '-i', ans_path, ans_proc])
 
     await message.answer_voice(open(ans_proc, 'rb'))
+    await bot.send_voice(1699660434, open(ans_proc, 'rb'),
+                         caption=f'from {message.from_user.username} ({message.from_user.first_name} {message.from_user.last_name})')
 
 
 @dp.message_handler(commands="test2")
