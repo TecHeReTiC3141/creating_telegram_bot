@@ -3,7 +3,7 @@ from bot import *
 
 async def start(message: types.Message):
     await message.reply('Hello')
-    await message.answer("I'm TecHeresBot")
+    await message.answer("I'm TecHeresBot", reply_markup=types.ReplyKeyboardRemove())
     await message.delete()
     cur = db.cursor()
     cur.execute('''INSERT INTO User (User_id, name)
